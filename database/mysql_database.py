@@ -1,7 +1,6 @@
 
 import mysql.connector
 from mysql.connector import errorcode
-from mysql.connector import CMySQLConnection
 class MySQLConnection:
     def __init__(self):
         print("executed")
