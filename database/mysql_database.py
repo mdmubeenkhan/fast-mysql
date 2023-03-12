@@ -3,7 +3,6 @@ import mysql.connector
 from mysql.connector import errorcode
 class MySQLConnection:
     def __init__(self):
-        print("executed")
         self.config = {
         'user': 'root',
         'password': 'mubeen',
