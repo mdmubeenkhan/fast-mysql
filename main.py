@@ -1,7 +1,7 @@
 from fastapi import FastAPI,status, HTTPException
 from fastapi.params import Body
-import schema
-from database.mysql_database import MySQLConnection
+from schema import schema
+from no_orm_dbconn.no_orm_db import MySQLConnection
 import json
 
 

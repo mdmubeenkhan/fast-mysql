@@ -7,3 +7,7 @@ class Product(BaseModel):
     price:float
     is_available:bool
     inventory:int
+
+class UpdateProduct(BaseModel):
+    price:float
+    inventory:int
