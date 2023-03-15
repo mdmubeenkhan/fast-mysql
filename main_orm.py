@@ -4,7 +4,8 @@ from orm_dbconn.orm_db import engine
 from sqlalchemy.orm import Session
 from orm_dbconn.orm_db import get_db
 from schema import schema
-
+from typing import List
+from fastapi.encoders import jsonable_encoder
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
@@ -13,6 +14,21 @@ models.Base.metadata.create_all(bind=engine)
 def get_all(db:Session=Depends(get_db)):
     data = db.query(models.Products).all()
     return {"data": data}
+
+#Response model added, to send only few fields to user
+@app.get("/resp", status_code=status.HTTP_200_OK, response_model=List[schema.Response_Model])
+def get_all(db:Session=Depends(get_db)):
+    data = db.query(models.Products).all()
+    return data
+
+#Response model added, to send only few fields to user
+#jsonable_encoder converts model data type to json data type
+@app.get("/resp/{id}", status_code=status.HTTP_200_OK, response_model=schema.Response_Model)
+def get_all(id:int, db:Session=Depends(get_db)):
+    data = db.query(models.Products).filter(models.Products.id==id).first()
+    if not data:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with id = {id} not found.")
+    return jsonable_encoder(data)
 
 @app.get("/{id}")
 def get_all(id:int, db:Session=Depends(get_db)):

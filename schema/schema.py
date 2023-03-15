@@ -11,3 +11,10 @@ class Product(BaseModel):
 class UpdateProduct(BaseModel):
     price:float
     inventory:int
+
+class Response_Model(BaseModel):
+    name:str
+    price:float
+
+    class Config:
+        orm_mode = True
