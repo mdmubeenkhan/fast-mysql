@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 class Product(BaseModel):
@@ -15,6 +15,19 @@ class UpdateProduct(BaseModel):
 class Response_Model(BaseModel):
     name:str
     price:float
+
+    class Config:
+        orm_mode = True
+
+
+class CreateUser(BaseModel):
+    name:str
+    email:EmailStr
+    password:str
+
+class UserResponse(BaseModel):
+    name:str
+    email:EmailStr
 
     class Config:
         orm_mode = True

@@ -12,3 +12,12 @@ class Products(Base):
     inventory = Column(Integer, nullable=True, server_default="0")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+
+class Users(Base):
+    __tablename__ = "Users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(15), nullable=False)
+    email = Column(String(25), nullable=False, unique=True)
+    password = Column(String(8), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())

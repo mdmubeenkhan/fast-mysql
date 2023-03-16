@@ -76,3 +76,15 @@ def update(id:int, payload:schema.Product, db:Session=Depends(get_db)):
 
 
 
+@app.post("/user", status_code=status.HTTP_201_CREATED, response_model=schema.UserResponse)
+def create_new(payload:schema.CreateUser, db:Session=Depends(get_db)):
+    new_user = models.Users(**payload.dict())
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
+
+@app.get("/user/get-user", status_code=status.HTTP_200_OK, response_model=List[schema.UserResponse])
+def get_all(db:Session=Depends(get_db)):
+    data = db.query(models.Users).all()
+    return data
