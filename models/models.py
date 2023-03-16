@@ -19,5 +19,5 @@ class Users(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(15), nullable=False)
     email = Column(String(25), nullable=False, unique=True)
-    password = Column(String(8), nullable=False)
+    password = Column(String(256), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

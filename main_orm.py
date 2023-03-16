@@ -6,6 +6,10 @@ from orm_dbconn.orm_db import get_db
 from schema import schema
 from typing import List
 from fastapi.encoders import jsonable_encoder
+
+from security import hashing
+
+
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
@@ -78,6 +82,7 @@ def update(id:int, payload:schema.Product, db:Session=Depends(get_db)):
 
 @app.post("/user", status_code=status.HTTP_201_CREATED, response_model=schema.UserResponse)
 def create_new(payload:schema.CreateUser, db:Session=Depends(get_db)):
+    payload.password = hashing.hash_pwd(payload.password)
     new_user = models.Users(**payload.dict())
     db.add(new_user)
     db.commit()
