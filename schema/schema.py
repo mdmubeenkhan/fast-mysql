@@ -31,3 +31,10 @@ class UserResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Auth_Schema(BaseModel):
+    email:EmailStr
+    password:str
+
+    class Config:
+        orm_mode = True
