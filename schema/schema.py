@@ -32,9 +32,19 @@ class UserResponse(BaseModel):
     class Config:
         orm_mode = True
 
-class Auth_Schema(BaseModel):
+class AuthSchema(BaseModel):
     email:EmailStr
     password:str
 
     class Config:
         orm_mode = True
+
+class AuthToken(BaseModel):
+    access_token:str
+    token_type:str
+    class Config:
+        orm_mode = True
+
+class TokenData(BaseModel):
+    id:str
+    role:str

@@ -6,6 +6,7 @@ from models import models
 from fastapi.encoders import jsonable_encoder
 from typing import List
 from schema import schema
+from auth import oauth2
 
 
 router = APIRouter(
@@ -14,13 +15,13 @@ router = APIRouter(
 )
 
 @router.get("/")
-def get_all(db:Session=Depends(get_db)):
+def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
     data = db.query(models.Products).all()
     return {"data": data}
 
 #Response model added, to send only few fields to user
 @router.get("/resp", status_code=status.HTTP_200_OK, response_model=List[schema.Response_Model])
-def get_all(db:Session=Depends(get_db)):
+def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
     data = db.query(models.Products).all()
     return data
 
@@ -51,7 +52,8 @@ def create_new(payload:schema.Product, db:Session=Depends(get_db)):
 # even if we pass extra key value data in the post request, Schema will ignore
 # **payload.dict() this unpacks the body data like dictionary
 @router.post("/")
-def create_new(payload:schema.Product, db:Session=Depends(get_db)):
+def create_new(payload:schema.Product, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
+    print(user_detail)
     new_product = models.Products(**payload.dict())
     db.add(new_product)
     db.commit()
@@ -59,7 +61,7 @@ def create_new(payload:schema.Product, db:Session=Depends(get_db)):
     return {"data": new_product}
 
 @router.delete("/{id}")
-def delete_product(id:int, db:Session=Depends(get_db)):
+def delete_product(id:int, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
     data = db.query(models.Products).filter(models.Products.id==id)
     if not data.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with id = {id} not found.")
@@ -69,7 +71,7 @@ def delete_product(id:int, db:Session=Depends(get_db)):
 
 
 @router.put("/{id}")
-def update(id:int, payload:schema.Product, db:Session=Depends(get_db)):
+def update(id:int, payload:schema.Product, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
     data = db.query(models.Products).filter(models.Products.id==id)
     if not data.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with id = {id} not found.")

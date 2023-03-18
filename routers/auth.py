@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 #we can write payload or user_credential, or any other meaningful word to get request body
-@router.post("/auth")
+@router.post("/auth", response_model=schema.AuthToken)
 def login(user_credential:OAuth2PasswordRequestForm=Depends(), db:Session=Depends(orm_db.get_db)):
     # OAuth2PasswordRequestForm always consider "username" and "password", 
     # even if user passes email, it will be treated as username
@@ -23,17 +23,17 @@ def login(user_credential:OAuth2PasswordRequestForm=Depends(), db:Session=Depend
     #Once we start using OAuth2PasswordRequestForm we can no longer be able to pass user credential in body
     # we need to pass user credential in FORM data
 
-    # def login(user_credential:schema.Auth_Schema, db:Session=Depends(orm_db.get_db)):
+    # def login(user_credential:schema.AuthSchema, db:Session=Depends(orm_db.get_db)):
 
     # we have to modify below line use username instead of email as we are using OAuth2PasswordRequestForm
     # user = db.query(models.Users).filter(models.Users.email == user_credential.email).first()
 
     user = db.query(models.Users).filter(models.Users.email == user_credential.username).first()
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Invalid credential.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Invalid credential.")
     
     if not hashing.verify_pwd(user_credential.password, user.password):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid credential.")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid credential.")
 
     #apart from user id, we can pass roles and other information also
     #user role hard-coded = Admin
