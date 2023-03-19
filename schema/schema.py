@@ -8,6 +8,9 @@ class Product(BaseModel):
     is_available:bool
     inventory:int
 
+class ProductCreate(Product):
+    user_id:int
+
 class UpdateProduct(BaseModel):
     price:float
     inventory:int

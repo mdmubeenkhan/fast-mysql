@@ -5,6 +5,7 @@ from models import models
 from typing import List
 from schema import schema
 from security import hashing
+from auth import oauth2
 
 router = APIRouter(
     prefix="/user",
@@ -33,3 +34,12 @@ def get_all(id:int, db:Session=Depends(get_db)):
     if not data:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id = {id} not found.")
     return data
+
+@router.delete("/{id}")
+def delete_user(id:int, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
+    data = db.query(models.Users).filter(models.Users.id==id)
+    if not data.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id = {id} not found.")
+    data.delete(synchronize_session=False)
+    db.commit()
+    return {"details":f"User with id = {id} is deleted."}

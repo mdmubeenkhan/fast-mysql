@@ -16,7 +16,9 @@ router = APIRouter(
 
 @router.get("/")
 def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
-    data = db.query(models.Products).all()
+    x, y = user_detail
+    user_id = x[1]
+    data = db.query(models.Products).filter(models.Products.user_id == int(user_id)).all()
     return {"data": data}
 
 #Response model added, to send only few fields to user
@@ -28,10 +30,17 @@ def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_curr
 #Response model added, to send only few fields to user
 #jsonable_encoder converts model data type to json data type
 @router.get("/resp/{id}", status_code=status.HTTP_200_OK, response_model=schema.Response_Model)
-def get_all(id:int, db:Session=Depends(get_db)):
+def get_all(id:int, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
     data = db.query(models.Products).filter(models.Products.id==id).first()
     if not data:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with id = {id} not found.")
+
+    a, b = user_detail
+    user_id = a[1]
+
+    if user_id != str(data.first().user_id):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Others product details cant be seen.")
+        
     return jsonable_encoder(data)
 
 @router.get("/{id}")
@@ -53,8 +62,13 @@ def create_new(payload:schema.Product, db:Session=Depends(get_db)):
 # **payload.dict() this unpacks the body data like dictionary
 @router.post("/")
 def create_new(payload:schema.Product, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
-    print(user_detail)
-    new_product = models.Products(**payload.dict())
+    a, b = user_detail
+    user_id = a[1]
+    new_dict = payload.dict()
+    new_dict.update({"user_id": user_id})
+    # new_product = models.Products(**payload.dict())
+    new_product = models.Products(**new_dict)
+    
     db.add(new_product)
     db.commit()
     db.refresh(new_product)
@@ -65,6 +79,13 @@ def delete_product(id:int, db:Session=Depends(get_db), user_detail:dict=Depends(
     data = db.query(models.Products).filter(models.Products.id==id)
     if not data.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with id = {id} not found.")
+    
+    a, b = user_detail
+    user_id = a[1]
+
+    if user_id != str(data.first().user_id):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"You cannot delete others product.")
+    
     data.delete(synchronize_session=False)
     db.commit()
     return {"details":f"Record with id = {id} is deleted."}
@@ -75,6 +96,13 @@ def update(id:int, payload:schema.Product, db:Session=Depends(get_db), user_deta
     data = db.query(models.Products).filter(models.Products.id==id)
     if not data.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Product with id = {id} not found.")
+
+    a, b = user_detail
+    user_id = a[1]
+
+    if user_id != str(data.first().user_id):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"You cannot edit others product.")
+
     data.update(payload.dict(), synchronize_session=False)
     db.commit()
     return {"data": data.first()}
