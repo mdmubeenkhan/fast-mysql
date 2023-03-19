@@ -1,6 +1,7 @@
 from orm_dbconn.orm_db import Base
 from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 class Products(Base):
     __tablename__ = "Products"
@@ -14,6 +15,8 @@ class Products(Base):
     #Below for Foreign key, User refers to Table name, not the class name
     #Both class name and Table name is same in our case, but we should remember to use only Tablename
     user_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+    #relationship, here we are returning class and NOT Table Name
+    owner = relationship("Users")
 
 class Users(Base):
     __tablename__ = "Users"

@@ -15,10 +15,19 @@ class UpdateProduct(BaseModel):
     price:float
     inventory:int
 
+
+class UserResponse(BaseModel):
+    name:str
+    email:EmailStr
+
+    class Config:
+        orm_mode = True
+
+
 class Response_Model(BaseModel):
     name:str
     price:float
-
+    owner: UserResponse
     class Config:
         orm_mode = True
 
@@ -28,12 +37,6 @@ class CreateUser(BaseModel):
     email:EmailStr
     password:str
 
-class UserResponse(BaseModel):
-    name:str
-    email:EmailStr
-
-    class Config:
-        orm_mode = True
 
 class AuthSchema(BaseModel):
     email:EmailStr
