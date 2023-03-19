@@ -38,10 +38,10 @@ def get_all(id:int, db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.
     a, b = user_detail
     user_id = a[1]
 
-    if user_id != str(data.first().user_id):
+    if user_id != str(data.user_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"Others product details cant be seen.")
         
-    return jsonable_encoder(data)
+    return data
 
 @router.get("/{id}")
 def get_all(id:int, db:Session=Depends(get_db)):
