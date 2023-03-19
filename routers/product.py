@@ -14,6 +14,14 @@ router = APIRouter(
     tags=["Product"]
 )
 
+#skip is used by frontend for pagination
+@router.get("/get-all/query-param")
+def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user), limit:int=5, skip=0):
+    print(limit)
+    data = db.query(models.Products).limit(limit).offset(skip).all()
+    return data
+
+#return all products of logged-in user
 @router.get("/")
 def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):
     x, y = user_detail
@@ -21,6 +29,7 @@ def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_curr
     data = db.query(models.Products).filter(models.Products.user_id == int(user_id)).all()
     return {"data": data}
 
+#return all products of ALL USERS with limited field information
 #Response model added, to send only few fields to user
 @router.get("/resp", status_code=status.HTTP_200_OK, response_model=List[schema.Response_Model])
 def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user)):

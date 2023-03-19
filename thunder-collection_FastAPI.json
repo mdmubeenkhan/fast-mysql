@@ -1,0 +1,324 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "FastAPI",
+    "dateExported": "2023-03-19T11:51:49.712Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "fd09f18c-fea8-46c0-8f00-0d4f7794d8b1",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "create user",
+            "url": "http://localhost:8000/user",
+            "method": "POST",
+            "sortNum": 2500,
+            "created": "2023-03-18T14:37:07.683Z",
+            "modified": "2023-03-19T10:37:43.859Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Ameen\",\n  \"email\": \"ameen@gmail.com\",\n  \"password\": \"mubeen\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a9023874-52a9-47fa-9b8b-8bc4846b6436",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "Authentication",
+            "url": "http://localhost:8000/auth",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2023-03-18T05:15:08.095Z",
+            "modified": "2023-03-19T04:13:02.171Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "aye@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "mubeen"
+                    }
+                ]
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.access_token",
+                    "action": "setto",
+                    "value": "{{access_token}}"
+                }
+            ]
+        },
+        {
+            "_id": "941c5ac9-b73d-4bd7-a2a7-032a0d6eb36b",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "ameen auth",
+            "url": "http://localhost:8000/auth",
+            "method": "POST",
+            "sortNum": 5625,
+            "created": "2023-03-19T10:37:58.147Z",
+            "modified": "2023-03-19T10:38:18.859Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "ameen@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "mubeen"
+                    }
+                ]
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.access_token",
+                    "action": "setto",
+                    "value": "{{access_token}}"
+                }
+            ]
+        },
+        {
+            "_id": "6abc1392-77fe-4109-ad35-2e4ad2ce1cab",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "mubeen authentication",
+            "url": "http://localhost:8000/auth",
+            "method": "POST",
+            "sortNum": 6250,
+            "created": "2023-03-19T06:35:50.940Z",
+            "modified": "2023-03-19T06:36:37.853Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "mubbeen@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "value": "mubeen"
+                    }
+                ]
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.access_token",
+                    "action": "setto",
+                    "value": "{{access_token}}"
+                }
+            ]
+        },
+        {
+            "_id": "9b3c535e-fdf9-417c-8356-cf82d4aabb69",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "create product",
+            "url": "http://localhost:8000/product/",
+            "method": "POST",
+            "sortNum": 7500,
+            "created": "2023-03-18T14:44:32.267Z",
+            "modified": "2023-03-19T10:52:45.620Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"inventory\": 5,\n  \"price\": 5,\n  \"is_available\": true,\n  \"name\": \"aye product 5\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "8366a31c-571c-4d86-9a9d-736238791421",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "Get All product",
+            "url": "http://localhost:8000/product/get-all/query-param",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-03-18T02:51:24.877Z",
+            "modified": "2023-03-19T11:00:31.418Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b54e7e00-72cb-443f-b220-eb68147d407e",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "Query-Param Get All product",
+            "url": "http://localhost:8000/product/get-all/query-param?limit=3&skip=3",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2023-03-19T11:40:18.235Z",
+            "modified": "2023-03-19T11:50:59.945Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "limit",
+                    "value": "3",
+                    "isPath": false
+                },
+                {
+                    "name": "skip",
+                    "value": "3",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "99316c1c-996d-4c1d-a078-e93d9ba0d411",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "get specific product",
+            "url": "http://localhost:8000/product/resp/8",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-03-19T09:32:50.836Z",
+            "modified": "2023-03-19T10:39:43.382Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "51d4e496-0477-418d-bf12-8f083b785f19",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "get specific user",
+            "url": "http://localhost:8000/user/get-user/3",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-03-18T14:38:31.085Z",
+            "modified": "2023-03-18T14:38:31.085Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"sheshu3\",\n  \"email\": \"sheshu3@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "968520e2-b5d6-4752-84b6-464ef3f2b568",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "get all user",
+            "url": "http://localhost:8000/user/",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-03-18T15:19:32.392Z",
+            "modified": "2023-03-18T15:19:32.392Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"sheshu3\",\n  \"email\": \"sheshu3@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "69d63c6e-dc99-45f5-83c3-8b9d12b0a140",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "delete user",
+            "url": "http://localhost:8000/user/",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2023-03-18T16:07:26.314Z",
+            "modified": "2023-03-18T16:07:26.314Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"sheshu3\",\n  \"email\": \"sheshu3@gmail.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "7417bedf-c6e5-4948-b78d-fe9e0c58d219",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "delete product",
+            "url": "http://localhost:8000/product/10",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-03-19T06:50:09.901Z",
+            "modified": "2023-03-19T10:44:32.450Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"sheshu3\",\n  \"email\": \"sheshu3@gmail.com\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c296521-3811-4da0-bf3e-45110110f83b",
+            "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
+            "containerId": "",
+            "name": "edit product",
+            "url": "http://localhost:8000/product/10",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2023-03-19T07:26:44.046Z",
+            "modified": "2023-03-19T10:44:18.649Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"ameen edit\",\n  \"price\": \"11\",\n  \"is_available\": true,\n  \"inventory\": 55,\n  \"extra1\":1\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        }
+    ]
+}
