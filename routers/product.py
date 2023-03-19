@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends, HTTPException, status, APIRouter
 from orm_dbconn.orm_db import get_db
 from models import models
 from fastapi.encoders import jsonable_encoder
-from typing import List
+from typing import List, Optional
 from schema import schema
 from auth import oauth2
 
@@ -16,9 +16,9 @@ router = APIRouter(
 
 #skip is used by frontend for pagination
 @router.get("/get-all/query-param")
-def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user), limit:int=5, skip=0):
+def get_all(db:Session=Depends(get_db), user_detail:dict=Depends(oauth2.get_current_user), limit:int=5, skip=0, search: Optional[str]=""):
     print(limit)
-    data = db.query(models.Products).limit(limit).offset(skip).all()
+    data = db.query(models.Products).filter(models.Products.name.contains(search)).limit(limit).offset(skip).all()
     return data
 
 #return all products of logged-in user

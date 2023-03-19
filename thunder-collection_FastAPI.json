@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "FastAPI",
-    "dateExported": "2023-03-19T11:51:49.712Z",
+    "dateExported": "2023-03-19T12:25:03.416Z",
     "version": "1.1",
     "folders": [],
     "requests": [
@@ -175,11 +175,11 @@
             "colId": "8f4da9d3-7cf6-46cf-9f3e-3ae00b59cf8b",
             "containerId": "",
             "name": "Query-Param Get All product",
-            "url": "http://localhost:8000/product/get-all/query-param?limit=3&skip=3",
+            "url": "http://localhost:8000/product/get-all/query-param?limit=3&skip=0&search=m%20prod",
             "method": "GET",
             "sortNum": 15000,
             "created": "2023-03-19T11:40:18.235Z",
-            "modified": "2023-03-19T11:50:59.945Z",
+            "modified": "2023-03-19T12:22:07.731Z",
             "headers": [],
             "params": [
                 {
@@ -189,7 +189,12 @@
                 },
                 {
                     "name": "skip",
-                    "value": "3",
+                    "value": "0",
+                    "isPath": false
+                },
+                {
+                    "name": "search",
+                    "value": "m%20prod",
                     "isPath": false
                 }
             ],
