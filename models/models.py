@@ -26,3 +26,12 @@ class Users(Base):
     email = Column(String(25), nullable=False, unique=True)
     password = Column(String(256), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class Purchase(Base):
+    __tablename__="Purchase"
+    user_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE", onupdate="CASCADE"), primary_key=True, nullable=False)
+    product_id = Column(Integer,ForeignKey("Products.id", ondelete="CASCADE", onupdate="CASCADE"), primary_key=True, nullable=False)
+    quantity = Column(Integer, nullable=True)
+
+    owner = relationship("Users")
+    product = relationship("Products")

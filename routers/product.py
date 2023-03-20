@@ -1,9 +1,9 @@
 
 from sqlalchemy.orm import Session
-from fastapi import FastAPI, Depends, HTTPException, status, APIRouter
+from fastapi import Depends, HTTPException, status, APIRouter
 from orm_dbconn.orm_db import get_db
 from models import models
-from fastapi.encoders import jsonable_encoder
+# from fastapi.encoders import jsonable_encoder
 from typing import List, Optional
 from schema import schema
 from auth import oauth2

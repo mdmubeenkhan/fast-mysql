@@ -54,3 +54,21 @@ class AuthToken(BaseModel):
 class TokenData(BaseModel):
     id:str
     role:str
+
+class Purchase(BaseModel):
+    product_id:int
+    quantity:int
+
+class Product_Name_Price_Resp(BaseModel):
+    name:str
+    price:float
+    class Config:
+        orm_mode = True
+
+class PurchaseResponse(BaseModel):
+    product_id:int
+    quantity:int
+    owner: UserResponse
+    product: Product_Name_Price_Resp
+    class Config:
+        orm_mode = True
