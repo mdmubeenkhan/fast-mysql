@@ -8,14 +8,6 @@ Steps to run the Application:
 5. run command = uvicorn main:app --reload
 
 
-Below end point will return access token when we pass 
-1. username = email@address
-2. password = user-password
-http://localhost:8000/auth
-
-Then pass the access token in subsequent request as Bearer token. 
-
-Verify access token expiration time and adjust according to your project need.
 
 
 
@@ -37,3 +29,19 @@ SELECT * FROM fastapi.Users;
 SELECT * from fastapi.Products;
 SELECT * From fastapi.Purchase;
 INSERT INTO fastapi.Purchase(user_id, product_id)VALUES(2, 5);
+
+
+data = db.query(models.Products, func.count(models.Products.id).label("NoOfProductAddedByUser")).join(models.Users, models.Products.user_id==models.Users.id, isouter=True).group_by(models.Users.name).all()
+    
+
+Join
+------
+SELECT Users.name, Users.email, Products.name, Products.price, Products.inventory FROM fastapi.Users JOIN fastapi.Products ON Users.id=Products.user_id;
+
+
+count
+-------
+SELECT Products.user_id, Users.name, COUNT(Products.user_id) from fastapi.Products JOIN fastapi.Users ON Users.id=Products.user_id GROUP BY Products.user_id;
+SELECT Users.id as USER_ID, Users.name, COUNT(Products.user_id) from fastapi.Products JOIN fastapi.Users ON Users.id=Products.user_id GROUP BY Products.user_id;
+
+

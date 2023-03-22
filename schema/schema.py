@@ -72,3 +72,34 @@ class PurchaseResponse(BaseModel):
     product: Product_Name_Price_Resp
     class Config:
         orm_mode = True
+
+class UserNameResponse(BaseModel):
+    name:str
+    class Config:
+        orm_mode = True
+
+class ProductResponse_Model(BaseModel):
+    name:str
+    price:float
+    is_available:bool
+    inventory:int
+    owner: UserResponse
+    class Config:
+        orm_mode = True
+
+class NoOfProductAddedByLoggedInUser(BaseModel):
+    # Users: UserNameResponse
+    Products: ProductResponse_Model
+    class Config:
+        orm_mode = True
+
+
+# Name of the Key in this schema should match with the names in the response of data coming in api post query execution
+# data = db.query(models.Users, func.count(models.Products.id).label("NoOfProductAddedByUser")).join(models.Products, models.Products.user_id==models.Users.id).group_by(models.Users.name).all()
+# label =    NoOfProductAddedByUser should match in schema NoOfProductAddedByUser: int
+# models.Users should match in schema = Users: UserResponse
+class NoOfProductAddedByUser(BaseModel):
+    Name: UserResponse
+    NoOfProductAddedByUser: int
+    class Config:
+        orm_mode = True
