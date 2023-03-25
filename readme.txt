@@ -9,6 +9,9 @@ Steps to run the Application:
 
 
 
+CORS enabled and tested from google domain
+===========================================
+run this from console --> fetch("http://localhost:8000/user/get-user/3").then(res=>res.json()).then(console.log)
 
 
 DB Notes:
